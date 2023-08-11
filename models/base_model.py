@@ -35,10 +35,10 @@ class BaseModel:
         """ returns a dictionary containing all keys/values
             of __dict__ of the instance:"""
         new_dict = {}
-        for key, value in self__dict__.items():
+        for key, value in self.__dict__.items():
             if key == 'created_at' or key == 'updated_at':
                 new_dict[key] = value.isoformat()
             else:
-                new_dict[key]  = value
+                new_dict[key] = value
         new_dict['__class__'] = self.__class__.__name__
         return new_dict
