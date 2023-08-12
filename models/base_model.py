@@ -15,7 +15,12 @@ class BaseModel:
     """
 
     def __init__(self, *args, **kwargs):
-        """Initializes a base model instance"""
+        """Initializes a base model instance
+
+        Args:
+            *args (tuple): contains all arguments
+            **kwargs (dictionary): contains all arguments by key/value
+        """
 
         if not kwargs:
             self.id = str(uuid.uuid4())
