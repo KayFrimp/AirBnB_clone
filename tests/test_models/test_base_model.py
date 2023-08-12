@@ -5,6 +5,7 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class TestBaseModel(unittest.TestCase):
     def test_id_is_string(self):
         base_model = BaseModel()
@@ -22,3 +23,42 @@ class TestBaseModel(unittest.TestCase):
         bm.my_number = 89
         bm_json = bm.to_dict()
         self.assertIs(type(bm_json), dict)
+    def test_no_args_instantiates(self):
+        self.assertEqual(type(BaseModel()),BaseModel)
+    def test_created_at_is_same_as_updated_at(self):
+        bm = BaseModel()
+        self.assertEqual(bm.created_at, bm.updated_at)
+    def test_id_not_none(self):
+        base_model = BaseModel()
+        self.assertIsNotNone(base_model.id)
+    def test_created_at_is_not_same_as_updated_at_after_save(self):
+        bm = BaseModel()
+        initial_created_at = bm.created_at
+        initial_updated_at = bm.updated_at
+        import time
+        time.sleep(1)
+        bm.save()
+        self.assertNotEqual(initial_created_at, bm.updated_at)
+        self.assertEqual(initial_updated_at, bm.created_at)
+    def test_to_dict_has_class_key(self):
+        bm = BaseModel()
+        base_dict = bm.to_dict()
+        self.assertIn('__class__', base_dict)
+    def test_to_dict_datetime_format(self):
+        bm = BaseModel()
+        base_dict = bm.to_dict()
+        self.assertEqual(base_dict['created_at'], bm.created_at.isoformat())
+        self.assertEqual(base_dict['updated_at'], bm.updated_at.isoformat())
+    def test_args_unused(self):
+        bm = BaseModel
+        self.assertNotIn(None, bm.__dict__.values())
+    def test_instantiation_with_None_kwargs(self):
+        with self.assertRaises(TypeError):
+            BaseModel(id=None, created_at=None, updated_at=None)
+    def test_instantiation_with_kwargs(self):
+        dt = datetime.today()
+        dt_iso = dt.isoformat()
+        bm = BaseModel(id, created_at = dt_iso, updated_at = dt_iso)
+        self.assertEqual(bm.id)
+        self.assertEqual(bm.created_at, dt)
+        self.assertEqual(bm.updated_at, dt)
