@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         based on the class name and id.
 
         Args:
-            args (str): arguments passed to function"""
+            line (str): arguments passed to function"""
         args = line.split(' ')
         if not line:
             print("** class name missing **")
@@ -106,10 +106,25 @@ class HBNBCommand(cmd.Cmd):
                     return
             print("** no instance found **")
 
-    def do_all(self):
+    def do_all(self, line):
         """Prints all string representation of all instances
-        based or not on the class name."""
-        pass
+        based or not on the class name.
+
+         Args:
+            line (str): arguments passed to function"""
+        args = line.split(' ')
+        if not line:
+            print(storage.all())
+        elif HBNBCommand.cls_dict.get(args[0]) is None:
+            print("** class doesn't exist **")
+        else:
+            filtered_list = []
+            objs_dict = storage.all()
+            for key, value in objs_dict.items():
+                cls_name = value.__class__.__name__
+                if cls_name == args[0]:
+                    filtered_list += [value.__str__()]
+            print(filtered_list)
 
     def do_update(self):
         """Updates an instance based on the class name and id by adding
