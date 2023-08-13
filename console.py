@@ -3,6 +3,12 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,7 +19,15 @@ class HBNBCommand(cmd.Cmd):
         cls_dict (dict): key/value of supported classes"""
 
     prompt = '(hbnb) '
-    cls_dict = {'BaseModel': BaseModel}
+    cls_dict = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'Place': Place,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Review': Review,
+    }
 
     def do_quit(self, arg):
         """Quit command to exit the program
@@ -91,7 +105,6 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                     return
             print("** no instance found **")
-
 
     def do_all(self):
         """Prints all string representation of all instances
