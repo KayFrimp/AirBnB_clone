@@ -50,7 +50,7 @@ class TestPlace_instantiation(unittest.TestCase):
         self.assertEqual(str, type(Place.description))
         self.assertIn("description", dir(pl))
         self.assertNotIn("desctiption", pl.__dict__)
-    
+
     def test_number_bathrooms_is_class_attribute(self):
         pl = Place()
         self.assertEqual(int, type(Place.number_bathrooms))
@@ -138,6 +138,7 @@ class TestPlace_instantiation(unittest.TestCase):
         with self.assertRaises(TypeError):
             Place(id=None, created_at=None, updated_at=None)
 
+
 class TestPlace_to_dict(unittest.TestCase):
     """Unittests for testing to_dict method of the Place class."""
 
@@ -187,6 +188,7 @@ class TestPlace_to_dict(unittest.TestCase):
         }
         self.assertDictEqual(pl.to_dict(), tdict)
 
+
 class TestPlace_save(unittest.TestCase):
     """Unittests for testing save method of the Place class."""
 
@@ -204,6 +206,7 @@ class TestPlace_save(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
         if os.path.isfile(FileStorage._FileStorage__file_path):
             os.remove(FileStorage._FileStorage__file_path)
+
 
 if __name__ == "__main__":
     unittest.main()

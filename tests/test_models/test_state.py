@@ -132,15 +132,38 @@ class TestState_to_dict(unittest.TestCase):
         pass
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
+        """this tears down test methods"""
         pass
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_for_one_save(self):
+        st = State()
+        sleep(1)
+        first_updated_at = st.updated_at
+        st.save()
+        self.assertLess(first_updated_at, st.updated_at)
+
+    def test_for_two_saves(self):
+        st = State()
+        sleep(1)
+        first_updated_at = st.updated_at
+        st.save()
+        second_updated_at = st.updated_at
+        self.assertLess(first_updated_at, second_updated_at)
+        sleep(1)
+        st.save()
+        self.assertLess(second_updated_at, st.updated_at)
+
+    def test_save_with_arg(self):
+        st = State()
+        with self.assertRaises(TypeError):
+            st.save(None)
+
+    def test_if_save_updates_file(self):
+        st = State()
+        st.save()
+        stid = "State." + st.id
+        with open("hbnb.json", "r") as f:
+            self.assertIn(stid, f.read())
 
 
 if __name__ == "__main__":
