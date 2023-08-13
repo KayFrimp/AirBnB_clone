@@ -3,6 +3,11 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.base_model import Place
+from models.base_model import State
+from models.base_model import City
+from models.base_model import Amenity
+from models.base_model import Review
 
 
 class FileStorage:
