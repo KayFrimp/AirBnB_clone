@@ -75,7 +75,7 @@ class TestCity_instantiation(unittest.TestCase):
     def test_instantiation_with_kwargs(self):
         dt = datetime.today()
         dt_iso = dt.isoformat()
-        cy = City(id = "345", created_at=dt_iso, updated_at=dt_iso)
+        cy = City(id="345", created_at=dt_iso, updated_at=dt_iso)
         self.assertEqual(cy.id, "345")
         self.assertEqual(cy.created_at, dt)
         self.assertEqual(cy.updated_at, dt)
@@ -83,6 +83,7 @@ class TestCity_instantiation(unittest.TestCase):
     def test_instantiation_with_None_kwargs(self):
         with self.assertRaises(TypeError):
             City(id=None, created_at=None, updated_at=None)
+
 
 class TestCity_to_dict(unittest.TestCase):
     """Unittests for testing to_dict method of the City class."""
@@ -128,10 +129,11 @@ class TestCity_to_dict(unittest.TestCase):
         cy = City()
         with self.assertRaises(TypeError):
             cy.to_dict(None)
-    
+
     def test_to_dict_is_not_same_under_dict(self):
         cy = City()
         self.assertNotEqual(cy.to_dict(), cy.__dict__)
+
 
 class TestCity_save(unittest.TestCase):
     """Unittests for testing save method of the City class."""
@@ -150,6 +152,7 @@ class TestCity_save(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
         if os.path.isfile(FileStorage._FileStorage__file_path):
             os.remove(FileStorage._FileStorage__file_path)
+
 
 if __name__ == "__main__":
     unittest.main()

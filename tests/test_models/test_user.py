@@ -133,6 +133,8 @@ class TestUser_to_dict(unittest.TestCase):
         us = User()
         with self.assertRaises(TypeError):
             us.to_dict(None)
+
+
 class TestUser_save(unittest.TestCase):
     """Unittests for testing save method of the  class."""
 
@@ -150,6 +152,7 @@ class TestUser_save(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
         if os.path.isfile(FileStorage._FileStorage__file_path):
             os.remove(FileStorage._FileStorage__file_path)
+
 
 if __name__ == "__main__":
     unittest.main()
