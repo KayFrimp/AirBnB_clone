@@ -45,15 +45,53 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
             print(obj.id)
 
-    def do_show(self):
+    def do_show(self, line):
         """Prints the string representation of an instance
-        based on the class name and id."""
-        pass
+        based on the class name and id.
 
-    def do_destroy(self):
+        Args:
+            args (str): arguments passed to function"""
+        args = line.split(' ')
+        if not line:
+            print("** class name missing **")
+        elif HBNBCommand.cls_dict.get(args[0]) is None:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            objs_dict = storage.all()
+            for key, value in objs_dict.items():
+                cls_name = value.__class__.__name__
+                cls_id = value.id
+                if cls_name == args[0] and cls_id == args[1].strip('"'):
+                    print(value)
+                    return
+            print("** no instance found **")
+
+    def do_destroy(self, line):
         """Deletes an instance based on the class name and id
-        (save the change into JSON file)"""
-        pass
+        (save the change into JSON file)
+
+        Args:
+            line (str): arguments passed to function"""
+        args = line.split(' ')
+        if not line:
+            print("** class name missing **")
+        elif HBNBCommand.cls_dict.get(args[0]) is None:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            objs_dict = storage.all()
+            for key, value in objs_dict.items():
+                cls_name = value.__class__.__name__
+                cls_id = value.id
+                if cls_name == args[0] and cls_id == args[1].strip('"'):
+                    del storage._FileStorage__objects[key]
+                    storage.save()
+                    return
+            print("** no instance found **")
+
 
     def do_all(self):
         """Prints all string representation of all instances
