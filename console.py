@@ -2,6 +2,7 @@
 """console module"""
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -59,8 +60,14 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             # Add print functionality
-            pass
-
+            objs_dict = storage.all()
+            for key, value in objs_dict.items():
+                cls_name = value.__class__.__name__
+                cls_id = value.id
+                if cls_name == args[0] and cls_id == args[1].strip('"'):
+                    print(value)
+                    return
+            print("** no instance found **")
 
     def do_destroy(self):
         """Deletes an instance based on the class name and id
