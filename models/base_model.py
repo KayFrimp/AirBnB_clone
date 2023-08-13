@@ -6,7 +6,7 @@ import models
 
 
 class BaseModel:
-    """Base class definitio
+    """Base class definition
 
     Attributes:
         id (string): Unique identifier
