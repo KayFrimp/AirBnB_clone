@@ -79,3 +79,22 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("'id': '123456'", bmstr)
         self.assertIn("'created_at': " + dt_repr, bmstr)
         self.assertIn("'updated_at': " + dt_repr, bmstr)
+
+    def testSave(self):
+        """ Checks if save method updates the public instance instance
+        attribute updated_at """
+        self.my_model.first_name = "First"
+        self.my_model.save()
+
+        self.assertIsInstance(self.my_model.id, str)
+        self.assertIsInstance(self.my_model.created_at, datetime.datetime)
+        self.assertIsInstance(self.my_model.updated_at, datetime.datetime)
+
+        first_dict = self.my_model.to_dict()
+
+        self.my_model.first_name = "Second"
+        self.my_model.save()
+        sec_dict = self.my_model.to_dict()
+
+        self.assertEqual(first_dict['created_at'], sec_dict['created_at'])
+        self.assertNotEqual(first_dict['updated_at'], sec_dict['updated_at'])
